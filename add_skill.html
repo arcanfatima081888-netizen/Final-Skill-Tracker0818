@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Skill</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Skill Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Category *</label>
+                            <input type="text" class="form-control" id="category" name="category" required>
+                            <div class="form-text">e.g., Programming, Design, Languages, etc.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="proficiency" class="form-label">Proficiency Level *</label>
+                        <select class="form-select" id="proficiency" name="proficiency" required>
+                            <option value="" selected disabled>Select proficiency level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes/Evidence</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="Optional: Add details, links, or descriptions as evidence of your skill."></textarea>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Save Skill
+                        </button>
+                        <a href="{{ url_for('view_skills') }}" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

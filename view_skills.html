@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-list me-2"></i>Your Skills</h2>
+    <a href="{{ url_for('add_skill_page') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Add New Skill
+    </a>
+</div>
+
+{% if skills %}
+<div class="row">
+    {% for skill in skills %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card skill-card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0">{{ skill[1] }}</h5>
+                    <span class="badge 
+                        {% if skill[3] == 'Beginner' %}bg-secondary
+                        {% elif skill[3] == 'Intermediate' %}bg-primary
+                        {% elif skill[3] == 'Advanced' %}bg-info
+                        {% else %}bg-success
+                        {% endif %}">
+                        {{ skill[3] }}
+                    </span>
+                </div>
+                <p class="text-muted mb-2"><i class="fas fa-tag me-2"></i>{{ skill[2] }}</p>
+                {% if skill[5] %}
+                <p class="text-muted mb-3"><i class="fas fa-clock me-2"></i>{{ skill[5] }} hours practiced</p>
+                {% endif %}
+                {% if skill[4] %}
+                <p class="card-text">{{ skill[4] }}</p>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0">
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('add_practice', skill_id=skill[0]) }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="fas fa-play me-1"></i>Practice
+                    </a>
+                    <a href="{{ url_for('update_skill_page', skill_id=skill[0]) }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{{ url_for('delete_skill_page', skill_id=skill[0]) }}" class="btn btn-sm btn-outline-danger" 
+                       onclick="return confirm('Are you sure you want to delete this skill?')">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-graduation-cap fa-4x text-muted mb-4"></i>
+    <h4 class="text-muted">No skills yet</h4>
+    <p class="text-muted mb-4">Start tracking your skills to see your progress</p>
+    <a href="{{ url_for('add_skill_page') }}" class="btn btn-primary btn-lg">
+        <i class="fas fa-plus me-2"></i>Add Your First Skill
+    </a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0"><i class="fas fa-edit me-2"></i>Update Skill</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Skill Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ skill[1] }}" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Category *</label>
+                            <input type="text" class="form-control" id="category" name="category" value="{{ skill[2] }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="proficiency" class="form-label">Proficiency Level *</label>
+                        <select class="form-select" id="proficiency" name="proficiency" required>
+                            <option value="Beginner" {% if skill[3] == 'Beginner' %}selected{% endif %}>Beginner</option>
+                            <option value="Intermediate" {% if skill[3] == 'Intermediate' %}selected{% endif %}>Intermediate</option>
+                            <option value="Advanced" {% if skill[3] == 'Advanced' %}selected{% endif %}>Advanced</option>
+                            <option value="Expert" {% if skill[3] == 'Expert' %}selected{% endif %}>Expert</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes/Evidence</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="4">{{ skill[4] or '' }}</textarea>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Update Skill
+                        </button>
+                        <a href="{{ url_for('view_skills') }}" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

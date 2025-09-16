@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{{ skill[1] }}</h2>
+            <div>
+                <a href="{{ url_for('add_practice', skill_id=skill[0]) }}" class="btn btn-success me-2">
+                    <i class="fas fa-play me-2"></i>Log Practice
+                </a>
+                <a href="{{ url_for('update_skill_page', skill_id=skill[0]) }}" class="btn btn-primary me-2">
+                    <i class="fas fa-edit me-2"></i>Edit
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Skill Details</h5>
+                        <p><strong>Category:</strong> {{ skill[2] }}</p>
+                        <p><strong>Proficiency:</strong> 
+                            <span class="badge 
+                                {% if skill[3] == 'Beginner' %}bg-secondary
+                                {% elif skill[3] == 'Intermediate' %}bg-primary
+                                {% elif skill[3] == 'Advanced' %}bg-info
+                                {% else %}bg-success
+                                {% endif %}">
+                                {{ skill[3] }}
+                            </span>
+                        </p>
+                        <p><strong>Total Practice Hours:</strong> {{ skill[5] or 0 }}</p>
+                        <p><strong>Last Practiced:</strong> {{ skill[6] or 'Never' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if skill[4] %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Notes</h5>
+                <p>{{ skill[4] }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Achievements Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Achievements for {{ skill[1] }}</h5>
+                
+                {% if badges %}
+                <div class="row">
+                    {% for badge in badges %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="text-warning mb-2">
+                                    <i class="material-icons" style="font-size: 2.5rem;">{{ badge[2] }}</i>
+                                </div>
+                                <h6 class="card-title">{{ badge[0] }}</h6>
+                                <p class="card-text small text-muted">{{ badge[1] }}</p>
+                                <p class="card-text small"><em>Earned on: {{ badge[3] }}</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">No badges earned for this skill yet. Keep practicing!</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Streak Information -->
+        {% if streak_info %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Practice Streak</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Current Streak</th>
+                                <th>Longest Streak</th>
+                                <th>Last Practiced</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ streak_info[0][1] }} days</td>
+                                <td>{{ streak_info[0][2] }} days</td>
+                                <td>{{ streak_info[0][3] or 'Never' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Quick Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('add_practice', skill_id=skill[0]) }}" class="btn btn-success">
+                        <i class="fas fa-play me-2"></i>Log Practice
+                    </a>
+                    <a href="{{ url_for('update_skill_page', skill_id=skill[0]) }}" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Edit Skill
+                    </a>
+                    <a href="{{ url_for('view_skills') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>View All Skills
+                    </a>
+                    <a href="{{ url_for('achievements') }}" class="btn btn-outline-info">
+                        <i class="fas fa-trophy me-2"></i>View All Achievements
+                    </a>
+                    <a href="{{ url_for('progress_report') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-download me-2"></i>Download Progress Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
